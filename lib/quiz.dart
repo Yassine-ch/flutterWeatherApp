@@ -6,6 +6,7 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  int score=0;
   int currentQuestion = 0;
   var quiz = [
     {
@@ -13,21 +14,21 @@ class _QuizState extends State<Quiz> {
       "answers": [
         {"answer": "Answer 11", "correct": false},
         {"answer": "Answer 12", "correct": false},
-        {"answer": "Answer 13", "correct": false},
+        {"answer": "Answer 13", "correct": true},
       ]
     },
     {
       "title": "Question 2",
       "answers": [
         {"answer": "Answer 21", "correct": false},
-        {"answer": "Answer 22", "correct": false},
+        {"answer": "Answer 22", "correct": true},
         {"answer": "Answer 23", "correct": false},
       ]
     },
     {
       "title": "Question 3",
       "answers": [
-        {"answer": "Answer 31", "correct": false},
+        {"answer": "Answer 31", "correct": true},
         {"answer": "Answer 32", "correct": false},
         {"answer": "Answer 33", "correct": false},
       ]
@@ -41,7 +42,29 @@ class _QuizState extends State<Quiz> {
         title: Text('MyApp'),
         backgroundColor: Colors.grey,
       ),
-      body: ListView(
+      body:
+      (this.currentQuestion>=quiz.length)?
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+               Text( "score:${(100*score/quiz.length).round()}%",
+                style:TextStyle(fontSize: 20,color: Colors.grey) ,
+               ),
+                RaisedButton(onPressed: (){
+                  setState(() {
+                    this.currentQuestion=0;
+                    this.score=0;
+                  });
+                },
+                  color: Colors.black,
+                child:Text("Resetart") ,
+                  textColor: Colors.redAccent,
+                )
+              ],
+            ),
+          )
+      :ListView(
         children: <Widget>[
           ListTile(
             title: Center(
@@ -63,17 +86,27 @@ class _QuizState extends State<Quiz> {
               ),
             ),
           ),
-          ...(quiz[currentQuestion]['answer'] as List<Map<String, Object>>)
-              .map((answer) {
+          ...(quiz[currentQuestion]['answers'] as List<Map<String, Object>>).map((answer) {
             return ListTile(
-              title: RaisedButton(
-                onPressed: () {},
-                child: Text(answer['answer']),
+              title: Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: RaisedButton(
+                  color:Colors.black,textColor: Colors.white,
+                  onPressed: () {
+                    setState(() {
+                      if(answer['correct']==true){
+                        ++score;
+                      }
+                      ++currentQuestion;
+                    });
+                  },
+                  child: Text(answer['answer']),
+                ),
               ),
             );
-          }),
+          })
         ],
-      ),
+      )
     );
   }
 }
