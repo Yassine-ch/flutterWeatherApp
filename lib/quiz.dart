@@ -58,7 +58,7 @@ class _QuizState extends State<Quiz> {
                   });
                 },
                   color: Colors.black,
-                child:Text("Resetart") ,
+                child:Text("Restart") ,
                   textColor: Colors.redAccent,
                 )
               ],
