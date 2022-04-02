@@ -40,6 +40,7 @@ class _WeatherDetailsState extends State<WeatherDetails> {
       ListView.builder(
           itemCount: (weatherData==null?0: weatherData['list'].length),
           itemBuilder: (context,index){
+
             return Card(
               //List Items
               child: Row(
