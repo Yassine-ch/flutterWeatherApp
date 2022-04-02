@@ -1,4 +1,4 @@
-import 'package:appyouss/weather-detail.dart';
+import './weather-detail.dart';
 import 'package:flutter/material.dart';
 class Weather extends StatefulWidget {
   @override
