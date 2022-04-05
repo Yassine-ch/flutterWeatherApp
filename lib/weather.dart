@@ -7,6 +7,7 @@ class Weather extends StatefulWidget {
 
 class _WeatherState extends State<Weather> {
   String city;
+  TextEditingController textEditingController=new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,26 +18,36 @@ class _WeatherState extends State<Weather> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                decoration: InputDecoration(hintText: ('choose a city')),
+                controller: textEditingController,
+                decoration: InputDecoration(hintText: ('choose a city')
+                ),
                 onChanged: (value){
 
                   setState(() {
                     this.city=value;
                   });
                 },
+                onSubmitted: (value){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WeatherDetails(city)));
+                  textEditingController.text="";
+                },
               ),
             ),
           ),
           Container(
             width: 150,
-            child: RaisedButton(
-                color: Colors.black,
-                textColor: Colors.white,
-                child: Text('Get Weather',style: TextStyle(fontSize: 20),),
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WeatherDetails(city)));
-                },
-             ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  child: Text('Get Weather',style: TextStyle(fontSize: 18),),
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WeatherDetails(city)));
+                    textEditingController.text="";
+                  },
+               ),
+            ),
           )
         ],
       ),
